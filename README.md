@@ -39,7 +39,14 @@ Clone to `~/.rust-docs-index` for use across all projects:
 git clone https://github.com/gregoryraymond/indexed-rust-docs.git ~/.rust-docs-index
 ```
 
-Then in any Rust project's `CLAUDE.md`, add:
+Then in any Rust project, append to your `CLAUDE.md`:
+
+```bash
+# Create CLAUDE.md if it doesn't exist, then append the index
+cat ~/.rust-docs-index/CLAUDE.md >> CLAUDE.md
+```
+
+Or use the `# include` directive for dynamic updates:
 
 ```markdown
 # include ~/.rust-docs-index/CLAUDE.md

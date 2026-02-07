@@ -29,22 +29,60 @@ Structured indexes of Rust skills and documentation for AI assistants.
 └── reindex-docs.sh        # Bash indexer (alternative)
 ```
 
-## Usage
+## Installation
 
-Clone and reference in your project's `CLAUDE.md`:
+**Recommended: Global installation**
+
+Clone to `~/.rust-docs-index` for use across all projects:
+
+```bash
+git clone https://github.com/gregoryraymond/indexed-rust-docs.git ~/.rust-docs-index
+```
+
+Then in any Rust project's `CLAUDE.md`, add:
+
+```markdown
+# include ~/.rust-docs-index/CLAUDE.md
+```
+
+**Per-project installation**
+
+Alternatively, clone into your project directory:
 
 ```bash
 git clone https://github.com/gregoryraymond/indexed-rust-docs.git
 ```
 
+Then reference in your project's `CLAUDE.md`:
+
 ```markdown
 # include ./indexed-rust-docs/CLAUDE.md
 ```
 
-The index provides:
-- Error code routing (E0382 → ownership skill)
-- Task-based skill selection (async → concurrency skill)
-- Documentation links with URLs
+## What This Provides
+
+- **Error code routing** - E0382 → ownership skill
+- **Task-based skill selection** - "async" → concurrency skill
+- **Documentation indexes** - Links to Rust Book, Tokio, Tauri, etc.
+- **Pattern reference** - Quick lookup for common patterns
+- **Retrieval-led reasoning** - Claude consults skills before answering
+
+## How It Works
+
+When you include `CLAUDE.md` in your project, Claude Code will:
+
+1. See the index of available skills and documentation
+2. Route compiler errors to relevant skill files (e.g., E0382 → ownership)
+3. Select skills based on your task type (e.g., web → domain-web)
+4. Read the full skill content on-demand to provide guidance
+5. Follow documentation URLs for deep-dive information
+
+**Example workflow:**
+```
+You: "Getting error E0382: use of moved value"
+Claude: Reads ~/.rust-docs-index/rust-docs/rust-skills/m01-ownership/SKILL.md
+Claude: Provides guidance on ownership, move semantics, and solutions
+```
 
 ## Skills Included
 
@@ -85,15 +123,18 @@ Ownership & borrowing, smart pointers, error handling, concurrency, async/await,
 
 ## Re-indexing
 
-After adding new skills or documentation:
+After adding new skills or documentation, rebuild the index:
 
 ```bash
+cd ~/.rust-docs-index
 python3 reindex-docs.py  # Recommended
 # or
 ./reindex-docs.sh
 # or with Claude Code
 /reindex-docs
 ```
+
+The scripts will regenerate `CLAUDE.md` with updated paths and metadata.
 
 ## Contributing
 
